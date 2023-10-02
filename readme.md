@@ -10,6 +10,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 
 - [01 Create Hello World Function](#01-create-hello-world-function)
 - [02 Counter](#02-counter)
+- [03 To Be Or Not To Be](#03-to-be-or-not-to-be)
 
 ## 01 Create Hello World Function
 
@@ -78,3 +79,54 @@ return function () {
 ```
 
 After this we can simply increase the value of number by 1 inside the inner function and return it. The inner function will have the access of its outer scope as it is forming closure with createCounter function.
+
+## 03 To Be Or Not To Be
+
+### [Problem Statement ↗️](https://leetcode.com/problems/to-be-or-not-to-be/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Write a function expect that helps developers test their code. It should take in any value val and return an object with the following two functions.
+
+**toBe(val)** accepts another value and returns true if the two values === each other. If they are not equal, it should throw an error "Not Equal".
+
+**notToBe(val)** accepts another value and returns true if the two values !== each other. If they are equal, it should throw an error "Equal".
+
+### Solution
+
+```js
+type ToBeOrNotToBe = {
+  toBe: (val: any) => boolean,
+  notToBe: (val: any) => boolean,
+};
+
+function expect(val: any): ToBeOrNotToBe {
+  return {
+    toBe: (value: any) => {
+      if (value === val) {
+        return true;
+      } else {
+        throw "Not Equal";
+      }
+    },
+    notToBe: (value: any) => {
+      if (value !== val) {
+        return true;
+      } else {
+        throw "Equal";
+      }
+    },
+  };
+}
+
+/**
+ * expect(5).toBe(5); // true
+ * expect(5).notToBe(5); // throws "Equal"
+ */
+```
+
+### Explanation
+
+This problem statement states that for toBe, if the argument of toBe and expect function are equal then the toBe should return true else should throw new error "Not Equal".
+
+Same thing is required for notToBe as it will return true if its argument and expect function argument is not same else should throw new error "Equal".
+
+So I am simply returning an object from expect having two keys one as toBe and second one as notToBe which is using if and else to check that the argument of theirs is matching with the expect function or not and then returning the respective answer.
