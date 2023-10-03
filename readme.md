@@ -2,6 +2,8 @@
 
 This repository contains my solutions to the LeetCode 30 Days JavaScript Challenge. I'm on a journey to improve my JavaScript skills, and I'm excited to share my progress with you. Explore the solutions, learn from them, and join me on this coding adventure as we explore the world of JavaScript together!
 
+> **All the problems are solved using Typescript JS.**
+
 [My Leetcode Profile 😊](https://leetcode.com/itsharvihere/)
 
 [Join the Challenge 😍](https://leetcode.com/studyplan/30-days-of-javascript/)
@@ -11,6 +13,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [01 Create Hello World Function](#01-create-hello-world-function)
 - [02 Counter](#02-counter)
 - [03 To Be Or Not To Be](#03-to-be-or-not-to-be)
+- [04 Counter II](#04-counter-ii)
 
 ## 01 Create Hello World Function
 
@@ -130,3 +133,57 @@ This problem statement states that for toBe, if the argument of toBe and expect 
 Same thing is required for notToBe as it will return true if its argument and expect function argument is not same else should throw new error "Equal".
 
 So I am simply returning an object from expect having two keys one as toBe and second one as notToBe which is using if and else to check that the argument of theirs is matching with the expect function or not and then returning the respective answer.
+
+## 04 Counter II
+
+### [Problem Statement ↗️](https://leetcode.com/problems/counter-ii/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Write a function createCounter. It should accept an initial integer init. It should return an object with three functions.
+
+The three functions are:
+
+- increment() increases the current value by 1 and then returns it.
+- decrement() reduces the current value by 1 and then returns it.
+- reset() sets the current value to init and then returns it.
+
+### Solution
+
+```js
+type ReturnObj = {
+  increment: () => number,
+  decrement: () => number,
+  reset: () => number,
+};
+
+function createCounter(init: number): ReturnObj {
+  let value = init;
+
+  return {
+    increment: () => {
+      value += 1;
+      return value;
+    },
+    decrement: () => {
+      value -= 1;
+      return value;
+    },
+    reset: () => {
+      value = init;
+      return init;
+    },
+  };
+}
+
+/**
+ * const counter = createCounter(5)
+ * counter.increment(); // 6
+ * counter.reset(); // 5
+ * counter.decrement(); // 4
+ */
+```
+
+### Explanation
+
+The problem expect to return an object which should consists of three function i.e increment(), decrement() and reset(). As the name suggest increment will increase the value by 1 and return similar goes for the decrement but just will decrease by 1 and reset will reset the value to the initial value which is passed as an argument in the createCounter function. This problem will be solved using the closure in JavaScript.
+
+So inside the createCounter function first we will declare a variable named value which will hold the initial value init in it. After that we will return an object and will increase and decrease the value by 1 for increment and decrement and will return the value variable from it as these will form a closure with the value variable. Also for reset we will assign the init to value variable and will return the init or value both is fine.
