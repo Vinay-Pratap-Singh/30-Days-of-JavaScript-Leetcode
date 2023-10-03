@@ -14,6 +14,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [02 Counter](#02-counter)
 - [03 To Be Or Not To Be](#03-to-be-or-not-to-be)
 - [04 Counter II](#04-counter-ii)
+- [05 Apply Transform Over Each Element in Array](#05-apply-transform-over-each-element-in-array)
 
 ## 01 Create Hello World Function
 
@@ -187,3 +188,44 @@ function createCounter(init: number): ReturnObj {
 The problem expect to return an object which should consists of three function i.e increment(), decrement() and reset(). As the name suggest increment will increase the value by 1 and return similar goes for the decrement but just will decrease by 1 and reset will reset the value to the initial value which is passed as an argument in the createCounter function. This problem will be solved using the closure in JavaScript.
 
 So inside the createCounter function first we will declare a variable named value which will hold the initial value init in it. After that we will return an object and will increase and decrease the value by 1 for increment and decrement and will return the value variable from it as these will form a closure with the value variable. Also for reset we will assign the init to value variable and will return the init or value both is fine.
+
+## 05 Apply Transform Over Each Element in Array
+
+### [Problem Statement ↗️](https://leetcode.com/problems/apply-transform-over-each-element-in-array/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+### Solution without using Map method (as asked)
+
+```js
+function map(arr: number[], fn: (n: number, i: number) => number): number[] {
+  const returnedArray: number[] = [];
+  arr.forEach((item, index) => {
+    const value = fn(item, index);
+    returnedArray.push(value);
+  });
+  return returnedArray;
+}
+```
+
+### Explanation
+
+This problem has asked for an array of number whose value will be from calling the **fn** function with all the elements of **arr** array one by one, so we have to pass arr array elements with their respective array index in fn function to get a value and will have to store in an array and have to return it as an output.
+
+So for it I had declared an empty array named returnedArray, after which you can use any loop like forEach as above or simple for loop to loop over each elements of the arr array then will have to pass the array element and index to the fn function to get a value and then push it in the array returnedArray. After the loop I had simply returned the returnedArray.
+
+### Solution by using Map
+
+```js
+function map(arr: number[], fn: (n: number, i: number) => number): number[] {
+  return arr.map((item, index) => {
+    return fn(item, index);
+  });
+}
+```
+
+### Explanation
+
+As the problem statement says that we should not use map method over it but if you want you can use map method on arr array and can just return it as map method will create a new array with the values that are being returned from the map and that will be returned by return keyword. Inside the map method we can simply return the value getting from fn function by passing each element and their respective index in the fn function.
+
+### Time Complexity
+
+O(n) as we are looping on the array for one time.
