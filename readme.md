@@ -15,6 +15,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [03 To Be Or Not To Be](#03-to-be-or-not-to-be)
 - [04 Counter II](#04-counter-ii)
 - [05 Apply Transform Over Each Element in Array](#05-apply-transform-over-each-element-in-array)
+- [06 Filter Elements from Array](#05-filter-elements-from-array)
 
 ## 01 Create Hello World Function
 
@@ -193,6 +194,10 @@ So inside the createCounter function first we will declare a variable named valu
 
 ### [Problem Statement ↗️](https://leetcode.com/problems/apply-transform-over-each-element-in-array/?envType=study-plan-v2&envId=30-days-of-javascript)
 
+Given an integer array arr and a mapping function fn, return a new array with a transformation applied to each element.
+
+The returned array should be created such that returnedArray[i] = fn(arr[i], i).
+
 ### Solution without using Map method (as asked)
 
 ```js
@@ -212,7 +217,7 @@ This problem has asked for an array of number whose value will be from calling t
 
 So for it I had declared an empty array named returnedArray, after which you can use any loop like forEach as above or simple for loop to loop over each elements of the arr array then will have to pass the array element and index to the fn function to get a value and then push it in the array returnedArray. After the loop I had simply returned the returnedArray.
 
-### Solution by using Map
+### Solution by using Map method
 
 ```js
 function map(arr: number[], fn: (n: number, i: number) => number): number[] {
@@ -229,3 +234,45 @@ As the problem statement says that we should not use map method over it but if y
 ### Time Complexity
 
 O(n) as we are looping on the array for one time.
+
+## 06 Filter Elements from Array
+
+### [Problem Statement ↗️](https://leetcode.com/problems/filter-elements-from-array/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Given an integer array arr and a filtering function fn, return a filtered array filteredArr.
+
+The fn function takes one or two arguments:
+
+- arr[i] - number from the arr
+- i - index of arr[i]
+
+filteredArr should only contain the elements from the arr for which the expression fn(arr[i], i) evaluates to a truthy value. A truthy value is a value where Boolean(value) returns true.
+
+### Solution without using Filter method (as asked)
+
+```js
+type Fn = (n: number, i: number) => any;
+
+function filter(arr: number[], fn: Fn): number[] {
+  const newArray: number[] = [];
+  arr.forEach((item, index) => {
+    const result = fn(item, index);
+    if (result) {
+      newArray.push(item);
+    }
+  });
+  return newArray;
+}
+```
+
+### Solution by using Filter method
+
+```js
+type Fn = (n: number, i: number) => any;
+
+function filter(arr: number[], fn: Fn): number[] {
+  return arr.filter((item, index) => {
+    return fn(item, index);
+  });
+}
+```
