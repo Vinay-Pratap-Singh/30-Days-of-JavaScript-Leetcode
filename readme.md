@@ -16,6 +16,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [04 Counter II](#04-counter-ii)
 - [05 Apply Transform Over Each Element in Array](#05-apply-transform-over-each-element-in-array)
 - [06 Filter Elements from Array](#05-filter-elements-from-array)
+- [07 Array Reduce Transformation](#07-array-reduce-transformation)
 
 ## 01 Create Hello World Function
 
@@ -274,5 +275,42 @@ function filter(arr: number[], fn: Fn): number[] {
   return arr.filter((item, index) => {
     return fn(item, index);
   });
+}
+```
+
+## 07 Array Reduce Transformation
+
+### [Problem Statement ↗️](https://leetcode.com/problems/array-reduce-transformation/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Given an integer array nums, a reducer function fn, and an initial value init, return a reduced array.
+
+A reduced array is created by applying the following operation: val = fn(init, nums[0]), val = fn(val, nums[1]), val = fn(val, nums[2]), ... until every element in the array has been processed. The final value of val is returned.
+
+If the length of the array is 0, it should return init.
+
+### Solution without using Reduce method (as asked)
+
+```js
+type Fn = (accum: number, curr: number) => number;
+
+function reduce(nums: number[], fn: Fn, init: number): number {
+  let output = init;
+  nums.length &&
+    nums.forEach((num) => {
+      output = fn(output, num);
+    });
+  return output;
+}
+```
+
+### Solution by using Reduce method
+
+```js
+type Fn = (accum: number, curr: number) => number;
+
+function reduce(nums: number[], fn: Fn, init: number): number {
+  return nums.reduce((output, num) => {
+    return fn(output, num);
+  }, init);
 }
 ```
