@@ -17,6 +17,8 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [05 Apply Transform Over Each Element in Array](#05-apply-transform-over-each-element-in-array)
 - [06 Filter Elements from Array](#05-filter-elements-from-array)
 - [07 Array Reduce Transformation](#07-array-reduce-transformation)
+- [08 Function Composition](#08-function-composition)
+- [09 Return Length of Arguments Passed](#09-return-length-of-arguments-passed)
 
 ## 01 Create Hello World Function
 
@@ -313,4 +315,63 @@ function reduce(nums: number[], fn: Fn, init: number): number {
     return fn(output, num);
   }, init);
 }
+```
+
+## 08 Function Composition
+
+### [Problem Statement ↗️](https://leetcode.com/problems/function-composition/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Given an array of functions [f1, f2, f3, ..., fn], return a new function fn that is the function composition of the array of functions.
+
+The function composition of [f(x), g(x), h(x)] is fn(x) = f(g(h(x))).
+
+The function composition of an empty list of functions is the identity function f(x) = x.
+
+You may assume each function in the array accepts one integer as input and returns one integer as output.
+
+### Solution
+
+```js
+type F = (x: number) => number;
+
+function compose(functions: F[]): F {
+  return function (x) {
+    let output = x;
+    for (let i = functions.length - 1; i >= 0; i--) {
+      output = functions[i](output);
+    }
+    return output;
+  };
+}
+
+/**
+ * const fn = compose([x => x + 1, x => 2 * x])
+ * fn(4) // 9
+ */
+```
+
+## 09 Return Length of Arguments Passed
+
+### [Problem Statement ↗️](https://leetcode.com/problems/return-length-of-arguments-passed/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Write a function argumentsLength that returns the count of arguments passed to it.
+
+### Solution
+
+```js
+type JSONValue =
+  | null
+  | boolean
+  | number
+  | string
+  | JSONValue[]
+  | { [key: string]: JSONValue };
+
+function argumentsLength(...args: JSONValue[]): number {
+  return args.length;
+}
+
+/**
+ * argumentsLength(1, 2, 3); // 3
+ */
 ```
