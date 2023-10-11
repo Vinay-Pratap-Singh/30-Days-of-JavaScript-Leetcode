@@ -19,6 +19,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [07 Array Reduce Transformation](#07-array-reduce-transformation)
 - [08 Function Composition](#08-function-composition)
 - [09 Return Length of Arguments Passed](#09-return-length-of-arguments-passed)
+- [10 Allow One Function Call](#10-allow-one-function-call)
 
 ## 01 Create Hello World Function
 
@@ -373,5 +374,47 @@ function argumentsLength(...args: JSONValue[]): number {
 
 /**
  * argumentsLength(1, 2, 3); // 3
+ */
+```
+
+## 10 Allow One Function Call
+
+### [Problem Statement ↗️](https://leetcode.com/problems/allow-one-function-call/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Given a function fn, return a new function that is identical to the original function except that it ensures fn is called at most once.
+
+- The first time the returned function is called, it should return the same result as fn.
+- Every subsequent time it is called, it should return undefined.
+
+### Solution
+
+```js
+type JSONValue =
+  | null
+  | boolean
+  | number
+  | string
+  | JSONValue[]
+  | { [key: string]: JSONValue };
+type OnceFn = (...args: JSONValue[]) => JSONValue | undefined;
+
+function once(fn: Function): OnceFn {
+  let flag = false;
+  return function (...args) {
+    if (flag) {
+      return undefined;
+    } else {
+      flag = true;
+      return fn(...args);
+    }
+  };
+}
+
+/**
+ * let fn = (a,b,c) => (a + b + c)
+ * let onceFn = once(fn)
+ *
+ * onceFn(1,2,3); // 6
+ * onceFn(2,3,6); // returns undefined without calling fn
  */
 ```
