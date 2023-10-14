@@ -21,6 +21,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [09 Return Length of Arguments Passed](#09-return-length-of-arguments-passed)
 - [10 Allow One Function Call](#10-allow-one-function-call)
 - [11 Memoize](#11-memoize)
+- [12 Add Two Promises](#12-add-two-promises)
 
 ## 01 Create Hello World Function
 
@@ -461,5 +462,44 @@ function memoize(fn: Fn): Fn {
  * memoizedFn(2, 3) // 5
  * memoizedFn(2, 3) // 5
  * console.log(callCount) // 1
+ */
+```
+
+## 12 Add Two Promises
+
+### [Problem Statement ↗️](https://leetcode.com/problems/add-two-promises/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Given two promises promise1 and promise2, return a new promise. promise1 and promise2 will both resolve with a number. The returned promise should resolve with the sum of the two numbers.
+
+### Solution without using Promise.All
+
+```js
+type P = Promise<number>;
+
+async function addTwoPromises(promise1: P, promise2: P): P {
+  const num1 = await promise1;
+  const num2 = await promise2;
+  return num1 + num2;
+}
+
+/**
+ * addTwoPromises(Promise.resolve(2), Promise.resolve(2))
+ *   .then(console.log); // 4
+ */
+```
+
+### Solution by using Promise.All
+
+```js
+type P = Promise<number>;
+
+async function addTwoPromises(promise1: P, promise2: P): P {
+  const [num1, num2] = await Promise.all([promise1, promise2]);
+  return num1 + num2;
+}
+
+/**
+ * addTwoPromises(Promise.resolve(2), Promise.resolve(2))
+ *   .then(console.log); // 4
  */
 ```
