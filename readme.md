@@ -27,6 +27,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [15 Interval Cancellation](#15-interval-cancellation)
 - [16 Promise Time Limit](#16-promise-time-limit)
 - [17 Cache With Time Limit](#17-cache-with-time-limit)
+- [18 Debounce](#18-debounce)
 
 ## 01 Create Hello World Function
 
@@ -725,4 +726,33 @@ class TimeLimitedCache {
 // timeLimitedCache.set(1, 42, 1000); // false
 // timeLimitedCache.get(1); // 42
 // timeLimitedCache.count(); // 1
+```
+
+## 18 Debounce
+
+### [Problem Statement ↗️](https://leetcode.com/problems/debounce/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Given a function fn and a time in milliseconds t, return a debounced version of that function.
+
+A debounced function is a function whose execution is delayed by t milliseconds and whose execution is cancelled if it is called again within that window of time. The debounced function should also receive the passed parameters.
+
+### Solution
+
+```js
+type F = (...args: number[]) => void;
+
+function debounce(fn: F, t: number): F {
+  let timerID = undefined;
+  return function (...args) {
+    clearTimeout(timerID);
+    timerID = setTimeout(fn, t, ...args);
+  };
+}
+
+/**
+ * const log = debounce(console.log, 100);
+ * log('Hello'); // cancelled
+ * log('Hello'); // cancelled
+ * log('Hello'); // Logged at t=100ms
+ */
 ```
