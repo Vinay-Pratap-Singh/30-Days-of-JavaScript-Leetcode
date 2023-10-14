@@ -26,6 +26,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [14 Timeout Cancellation](#14-timeout-cancellation)
 - [15 Interval Cancellation](#15-interval-cancellation)
 - [16 Promise Time Limit](#16-promise-time-limit)
+- [17 Cache With Time Limit](#17-cache-with-time-limit)
 
 ## 01 Create Hello World Function
 
@@ -669,4 +670,59 @@ function timeLimit(fn: Fn, t: number): Fn {
  * const limited = timeLimit((t) => new Promise(res => setTimeout(res, t)), 100);
  * limited(150).catch(console.log) // "Time Limit Exceeded" at t=100ms
  */
+```
+
+## 17 Cache With Time Limit
+
+### [Problem Statement ↗️](https://leetcode.com/problems/cache-with-time-limit/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Write a class that allows getting and setting key-value pairs, however a time until expiration is associated with each key.
+
+The class has three public methods:
+
+- set(key, value, duration): accepts an integer key, an integer value, and a duration in milliseconds. Once the duration has elapsed, the key should be inaccessible. The method should return true if the same un-expired key already exists and false otherwise. Both the value and duration should be overwritten if the key already exists.
+
+- get(key): if an un-expired key exists, it should return the associated value. Otherwise it should return -1.
+
+- count(): returns the count of un-expired keys.
+
+### Solution
+
+```js
+class TimeLimitedCache {
+  obj: any;
+  constructor() {
+    this.obj = {};
+  }
+
+  set(key: number, value: number, duration: number): boolean {
+    const timer = setTimeout(() => {
+      delete this.obj[key];
+    }, duration);
+    if (!(key in this.obj)) {
+      this.obj[key] = [value, timer];
+      return false;
+    } else {
+      clearTimeout(this.obj[key][1]);
+      this.obj[key] = [value, timer];
+      return true;
+    }
+  }
+
+  get(key: number): number {
+    if (key in this.obj) {
+      return this.obj[key][0];
+    }
+    return -1;
+  }
+
+  count(): number {
+    return Object.keys(this.obj).length;
+  }
+}
+
+// const timeLimitedCache = new TimeLimitedCache();
+// timeLimitedCache.set(1, 42, 1000); // false
+// timeLimitedCache.get(1); // 42
+// timeLimitedCache.count(); // 1
 ```
