@@ -22,6 +22,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [10 Allow One Function Call](#10-allow-one-function-call)
 - [11 Memoize](#11-memoize)
 - [12 Add Two Promises](#12-add-two-promises)
+- [13 Sleep](#13-sleep)
 
 ## 01 Create Hello World Function
 
@@ -423,7 +424,7 @@ function once(fn: Function): OnceFn {
 
 ## 11 Memoize
 
-### [Problem Statement ↗️](https://leetcode.com/problems/memoize/)
+### [Problem Statement ↗️](https://leetcode.com/problems/memoize/?envType=study-plan-v2&envId=30-days-of-javascript)
 
 Given a function fn, return a memoized version of that function.
 
@@ -501,5 +502,24 @@ async function addTwoPromises(promise1: P, promise2: P): P {
 /**
  * addTwoPromises(Promise.resolve(2), Promise.resolve(2))
  *   .then(console.log); // 4
+ */
+```
+
+## 13 Sleep
+
+### [Problem Statement ↗️](https://leetcode.com/problems/sleep/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Given a positive integer millis, write an asynchronous function that sleeps for millis milliseconds. It can resolve any value.
+
+### Solution
+
+```js
+async function sleep(millis: number): Promise<void> {
+  await new Promise((resolve) => setTimeout(resolve, millis));
+}
+
+/**
+ * let t = Date.now()
+ * sleep(100).then(() => console.log(Date.now() - t)) // 100
  */
 ```
