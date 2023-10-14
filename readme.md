@@ -24,6 +24,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [12 Add Two Promises](#12-add-two-promises)
 - [13 Sleep](#13-sleep)
 - [14 Timeout Cancellation](#14-timeout-cancellation)
+- [15 Interval Cancellation](#15-interval-cancellation)
 
 ## 01 Create Hello World Function
 
@@ -575,5 +576,64 @@ function cancellable(fn: Fn, args: JSONValue[], t: number): Function {
  *  setTimeout(() => {
  *     console.log(result) // [{"time":20,"returned":10}]
  *  }, maxT + 15)
+ */
+```
+
+## 15 Interval Cancellation
+
+### [Problem Statement ↗️](https://leetcode.com/problems/interval-cancellation/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Given a function fn, an array of arguments args, and an interval time t, return a cancel function cancelFn.
+
+The function fn should be called with args immediately and then called again every t milliseconds until cancelFn is called at cancelT ms.
+
+### Solution
+
+```js
+type JSONValue =
+  | null
+  | boolean
+  | number
+  | string
+  | JSONValue[]
+  | { [key: string]: JSONValue };
+type Fn = (...args: JSONValue[]) => void;
+
+function cancellable(fn: Fn, args: JSONValue[], t: number): Function {
+  fn(...args);
+  const timeOver = setInterval(() => fn(...args), t);
+  const cancelFn = () => clearInterval(timeOver);
+  return cancelFn;
+}
+
+/**
+ *  const result = []
+ *
+ *  const fn = (x) => x * 2
+ *  const args = [4], t = 35, cancelT = 190
+ *
+ *  const start = performance.now()
+ *
+ *  const log = (...argsArr) => {
+ *      const diff = Math.floor(performance.now() - start)
+ *      result.push({"time": diff, "returned": fn(...argsArr)})
+ *  }
+ *
+ *  const cancel = cancellable(log, args, t);
+ *
+ *  setTimeout(() => {
+ *     cancel()
+ *  }, cancelT)
+ *
+ *  setTimeout(() => {
+ *    console.log(result)  // [
+ *                         //      {"time":0,"returned":8},
+ *                         //      {"time":35,"returned":8},
+ *                         //      {"time":70,"returned":8},
+ *                         //      {"time":105,"returned":8},
+ *                         //      {"time":140,"returned":8},
+ *                         //      {"time":175,"returned":8}
+ *                         //  ]
+ *  }, cancelT + t + 15)
  */
 ```
