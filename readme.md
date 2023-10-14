@@ -20,6 +20,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [08 Function Composition](#08-function-composition)
 - [09 Return Length of Arguments Passed](#09-return-length-of-arguments-passed)
 - [10 Allow One Function Call](#10-allow-one-function-call)
+- [11 Memoize](#11-memoize)
 
 ## 01 Create Hello World Function
 
@@ -416,5 +417,49 @@ function once(fn: Function): OnceFn {
  *
  * onceFn(1,2,3); // 6
  * onceFn(2,3,6); // returns undefined without calling fn
+ */
+```
+
+## 11 Memoize
+
+### [Problem Statement ↗️](https://leetcode.com/problems/memoize/)
+
+Given a function fn, return a memoized version of that function.
+
+A memoized function is a function that will never be called twice with the same inputs. Instead it will return a cached value.
+
+You can assume there are 3 possible input functions: sum, fib, and factorial.
+
+- sum accepts two integers a and b and returns a + b.
+- fib accepts a single integer n and returns 1 if n <= 1 or fib(n - 1) + fib(n - 2) otherwise.
+- factorial accepts a single integer n and returns 1 if n <= 1 or factorial(n - 1) \* n otherwise.
+
+### Solution
+
+```js
+type Fn = (...params: number[]) => number;
+
+function memoize(fn: Fn): Fn {
+  const cache = {};
+  return function (...args) {
+    const key: any = args;
+    if (key in cache) {
+      return cache[key];
+    }
+    const output = fn(...args);
+    cache[key] = output;
+    return output;
+  };
+}
+
+/**
+ * let callCount = 0;
+ * const memoizedFn = memoize(function (a, b) {
+ *	 callCount += 1;
+ *   return a + b;
+ * })
+ * memoizedFn(2, 3) // 5
+ * memoizedFn(2, 3) // 5
+ * console.log(callCount) // 1
  */
 ```
