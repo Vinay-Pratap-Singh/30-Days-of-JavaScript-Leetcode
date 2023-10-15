@@ -30,6 +30,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [18 Debounce](#18-debounce)
 - [19 Execute Asynchronous Functions in Parallel](#19-execute-asynchronous-functions-in-parallel)
 - [20 Is Object Empty](#20-is-object-empty)
+- [21 Chunk Array](#21-chunk-array)
 
 ## 01 Create Hello World Function
 
@@ -826,5 +827,40 @@ type Obj = Record<string, JSONValue> | JSONValue[];
 
 function isEmpty(obj: Obj): boolean {
   return Object.keys(obj).length === 0 ? true : false;
+}
+```
+
+## 21 Chunk Array
+
+### [Problem Statement ↗️](https://leetcode.com/problems/chunk-array/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Given an array arr and a chunk size size, return a chunked array. A chunked array contains the original elements in arr, but consists of subarrays each of length size. The length of the last subarray may be less than size if arr.length is not evenly divisible by size.
+
+### Solution
+
+```js
+type JSONValue =
+  | null
+  | boolean
+  | number
+  | string
+  | JSONValue[]
+  | { [key: string]: JSONValue };
+type Obj = Record<string, JSONValue> | Array<JSONValue>;
+
+function chunk(arr: Obj[], size: number): Obj[][] {
+  const output: Obj[][] = [];
+  const totalRequiredIterations = Math.ceil(arr.length / size);
+  let chunk = 0;
+  while (chunk < totalRequiredIterations) {
+    if (arr.length > size) {
+      let data = arr.splice(0, size);
+      output.push(data);
+    } else {
+      output.push(arr);
+    }
+    chunk += 1;
+  }
+  return output;
 }
 ```
