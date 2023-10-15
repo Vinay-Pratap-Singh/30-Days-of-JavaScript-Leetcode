@@ -28,6 +28,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [16 Promise Time Limit](#16-promise-time-limit)
 - [17 Cache With Time Limit](#17-cache-with-time-limit)
 - [18 Debounce](#18-debounce)
+- [19 Execute Asynchronous Functions in Parallel](#19-execute-asynchronous-functions-in-parallel)
 
 ## 01 Create Hello World Function
 
@@ -754,5 +755,47 @@ function debounce(fn: F, t: number): F {
  * log('Hello'); // cancelled
  * log('Hello'); // cancelled
  * log('Hello'); // Logged at t=100ms
+ */
+```
+
+## 19 Execute Asynchronous Functions in Parallel
+
+### [Problem Statement ↗️](https://leetcode.com/problems/execute-asynchronous-functions-in-parallel/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Given an array of asynchronous functions functions, return a new promise promise. Each function in the array accepts no arguments and returns a promise. All the promises should be executed in parallel.
+
+promise resolves:
+
+- When all the promises returned from functions were resolved successfully in parallel. The resolved value of promise should be an array of all the resolved values of promises in the same order as they were in the functions. The promise should resolve when all the asynchronous functions in the array have completed execution in parallel.
+
+promise rejects:
+
+- When any of the promises returned from functions were rejected. promise should also reject with the reason of the first rejection.
+
+### Solution
+
+```js
+type Fn<T> = () => Promise<T>;
+
+function promiseAll<T>(functions: Fn<T>[]): Promise<T[]> {
+  return new Promise((resolve, reject) => {
+    const output = [];
+    let count = functions.length;
+    for (let i = 0; i < functions.length; i++) {
+      functions[i]()
+        .then((response) => {
+          output[i] = response;
+          count--;
+
+          if (count === 0) return resolve(output);
+        })
+        .catch(reject);
+    }
+  });
+}
+
+/**
+ * const promise = promiseAll([() => new Promise(res => res(42))])
+ * promise.then(console.log); // [42]
  */
 ```
