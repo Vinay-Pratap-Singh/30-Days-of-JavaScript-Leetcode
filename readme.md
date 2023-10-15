@@ -32,6 +32,8 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [20 Is Object Empty](#20-is-object-empty)
 - [21 Chunk Array](#21-chunk-array)
 - [22 Array Prototype Last](#22-array-prototype-last)
+- [23 Group By](#23-group-by)
+- [24 Sort By](#24-sort-by)
 
 ## 01 Create Hello World Function
 
@@ -891,4 +893,75 @@ Array.prototype.last = function() {
  */
 
 export {};
+```
+
+## 23 Group By
+
+### [Problem Statement ↗️](https://leetcode.com/problems/group-by/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Write code that enhances all arrays such that you can call the array.groupBy(fn) method on any array and it will return a grouped version of the array.
+
+A grouped array is an object where each key is the output of fn(arr[i]) and each value is an array containing all items in the original array with that key.
+
+The provided callback fn will accept an item in the array and return a string key.
+
+The order of each value list should be the order the items appear in the array. Any order of keys is acceptable.
+
+### Solution
+
+```js
+declare global {
+    interface Array<T> {
+        groupBy(fn: (item: T) => string): Record<string, T[]>
+    }
+}
+
+Array.prototype.groupBy = function(fn) {
+    const result: Record<string, any[]> = {}
+
+    for (let i = 0; i < this.length; i++) {
+        const key: string = fn(this[i])
+
+        if (result[key]) {
+            result[key].push(this[i])
+        } else {
+            result[key] = [this[i]]
+        }
+    }
+
+    return result
+}
+
+export {}
+```
+
+## 24 Sort By
+
+### [Problem Statement ↗️](https://leetcode.com/problems/sort-by/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Given an array arr and a function fn, return a sorted array sortedArr. You can assume fn only returns numbers and those numbers determine the sort order of sortedArr. sortedArray must be sorted in ascending order by fn output.
+
+You may assume that fn will never duplicate numbers for a given array.
+
+### Solution
+
+```js
+type JSONValue =
+  | null
+  | boolean
+  | number
+  | string
+  | JSONValue[]
+  | { [key: string]: JSONValue };
+type Fn = (value: JSONValue) => number;
+
+function sortBy(arr: JSONValue[], fn: Fn): JSONValue[] {
+  const newArr = arr.map((e) => {
+    return {
+      v: fn(e),
+      o: e,
+    };
+  });
+  return newArr.sort((a, b) => a.v - b.v).map((e) => e.o);
+}
 ```
