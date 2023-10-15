@@ -29,6 +29,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [17 Cache With Time Limit](#17-cache-with-time-limit)
 - [18 Debounce](#18-debounce)
 - [19 Execute Asynchronous Functions in Parallel](#19-execute-asynchronous-functions-in-parallel)
+- [20 Is Object Empty](#20-is-object-empty)
 
 ## 01 Create Hello World Function
 
@@ -798,4 +799,32 @@ function promiseAll<T>(functions: Fn<T>[]): Promise<T[]> {
  * const promise = promiseAll([() => new Promise(res => res(42))])
  * promise.then(console.log); // [42]
  */
+```
+
+## 20 Is Object Empty
+
+### [Problem Statement ↗️](https://leetcode.com/problems/is-object-empty/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Given an object or an array, return if it is empty.
+
+- An empty object contains no key-value pairs.
+- An empty array contains no elements.
+
+You may assume the object or array is the output of JSON.parse.
+
+### Solution
+
+```js
+type JSONValue =
+  | null
+  | boolean
+  | number
+  | string
+  | JSONValue[]
+  | { [key: string]: JSONValue };
+type Obj = Record<string, JSONValue> | JSONValue[];
+
+function isEmpty(obj: Obj): boolean {
+  return Object.keys(obj).length === 0 ? true : false;
+}
 ```
