@@ -31,6 +31,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [19 Execute Asynchronous Functions in Parallel](#19-execute-asynchronous-functions-in-parallel)
 - [20 Is Object Empty](#20-is-object-empty)
 - [21 Chunk Array](#21-chunk-array)
+- [22 Array Prototype Last](#22-array-prototype-last)
 
 ## 01 Create Hello World Function
 
@@ -863,4 +864,31 @@ function chunk(arr: Obj[], size: number): Obj[][] {
   }
   return output;
 }
+```
+
+## 22 Array Prototype Last
+
+### [Problem Statement ↗️](https://leetcode.com/problems/array-prototype-last/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Write code that enhances all arrays such that you can call the array.last() method on any array and it will return the last element. If there are no elements in the array, it should return -1.
+
+### Solution
+
+```js
+declare global {
+    interface Array<T> {
+        last(): T | -1;
+    }
+}
+
+Array.prototype.last = function() {
+     return this.length ? this[this.length - 1] : -1;
+};
+
+/**
+ * const arr = [1, 2, 3];
+ * arr.last(); // 3
+ */
+
+export {};
 ```
