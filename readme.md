@@ -35,6 +35,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [23 Group By](#23-group-by)
 - [24 Sort By](#24-sort-by)
 - [25 Join Two Arrays by ID](#25-join-two-arrays-by-id)
+- [26 Flatten Deeply Nested Array](#26-flatten-deeply-nested-array)
 
 ## 01 Create Hello World Function
 
@@ -990,5 +991,42 @@ const join = (arr1: IdObj[], arr2: IdObj[]): IdObj[] => {
   for (const x of arr1) map.set(x.id, Object.assign({}, x));
   for (const x of arr2) map.set(x.id, Object.assign(map.get(x.id) ?? {}, x));
   return [...map.values()].sort((a, b) => a.id - b.id);
+};
+```
+
+## 26 Flatten Deeply Nested Array
+
+### [Problem Statement ↗️](https://leetcode.com/problems/flatten-deeply-nested-array/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Given a multi-dimensional array arr and a depth n, return a flattened version of that array.
+
+A multi-dimensional array is a recursive data structure that contains integers or other multi-dimensional arrays.
+
+A flattened array is a version of that array with some or all of the sub-arrays removed and replaced with the actual elements in that sub-array. This flattening operation should only be done if the current depth of nesting is less than n. The depth of the elements in the first array are considered to be 0.
+
+### Solution
+
+```js
+type MultiDimensionalArray = (number | MultiDimensionalArray)[];
+
+var flat = function (
+  arr: MultiDimensionalArray,
+  n: number
+): MultiDimensionalArray {
+  // base case
+  if (n === 0) {
+    return arr;
+  }
+
+  const output = [];
+  arr.forEach((element) => {
+    if (Array.isArray(element)) {
+      output.push(...flat(element, n - 1));
+    } else {
+      output.push(element);
+    }
+  });
+
+  return output;
 };
 ```
