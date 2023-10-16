@@ -36,6 +36,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [24 Sort By](#24-sort-by)
 - [25 Join Two Arrays by ID](#25-join-two-arrays-by-id)
 - [26 Flatten Deeply Nested Array](#26-flatten-deeply-nested-array)
+- [27 Compact Object](#27-compact-object)
 
 ## 01 Create Hello World Function
 
@@ -1029,4 +1030,50 @@ var flat = function (
 
   return output;
 };
+```
+
+## 27 Compact Object
+
+### [Problem Statement ↗️](https://leetcode.com/problems/compact-object/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Given an object or array obj, return a compact object. A compact object is the same as the original object, except with keys containing falsy values removed. This operation applies to the object and any nested objects. Arrays are considered objects where the indices are keys. A value is considered falsy when Boolean(value) returns false.
+
+### Solution
+
+```js
+type JSONValue =
+  | null
+  | boolean
+  | number
+  | string
+  | JSONValue[]
+  | { [key: string]: JSONValue };
+type Obj = Record<string, JSONValue> | Array<JSONValue>;
+
+function compactObject(obj: Obj): Obj {
+  // base case
+  if (!Boolean(obj)) {
+    return undefined;
+  }
+  if (typeof obj !== "object") {
+    return obj;
+  }
+
+  // if object is array
+  if (Array.isArray(obj)) {
+    const output = obj.map((item: any) => compactObject(item));
+    return output.filter((item: any) => item !== undefined);
+  }
+
+  // if object
+  const output = {};
+  for (const key in obj) {
+    const item: any = obj[key];
+    const result = compactObject(item);
+    if (result != undefined) {
+      output[key] = result;
+    }
+  }
+  return output;
+}
 ```
