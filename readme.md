@@ -34,6 +34,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [22 Array Prototype Last](#22-array-prototype-last)
 - [23 Group By](#23-group-by)
 - [24 Sort By](#24-sort-by)
+- [25 Join Two Arrays by ID](#25-join-two-arrays-by-id)
 
 ## 01 Create Hello World Function
 
@@ -964,4 +965,30 @@ function sortBy(arr: JSONValue[], fn: Fn): JSONValue[] {
   });
   return newArr.sort((a, b) => a.v - b.v).map((e) => e.o);
 }
+```
+
+## 25 Join Two Arrays by ID
+
+### [Problem Statement ↗️](https://leetcode.com/problems/join-two-arrays-by-id/description/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Given two arrays arr1 and arr2, return a new array joinedArray. All the objects in each of the two inputs arrays will contain an id field that has an integer value. joinedArray is an array formed by merging arr1 and arr2 based on their id key. The length of joinedArray should be the length of unique values of id. The returned array should be sorted in ascending order based on the id key.
+
+If a given id exists in one array but not the other, the single object with that id should be included in the result array without modification.
+
+If two objects share an id, their properties should be merged into a single object:
+
+- If a key only exists in one object, that single key-value pair should be included in the object.
+- If a key is included in both objects, the value in the object from arr2 should override the value from arr1.
+
+### Solution
+
+```js
+type IdObj = { id: number };
+
+const join = (arr1: IdObj[], arr2: IdObj[]): IdObj[] => {
+  const map = new Map<number, IdObj>();
+  for (const x of arr1) map.set(x.id, Object.assign({}, x));
+  for (const x of arr2) map.set(x.id, Object.assign(map.get(x.id) ?? {}, x));
+  return [...map.values()].sort((a, b) => a.id - b.id);
+};
 ```
