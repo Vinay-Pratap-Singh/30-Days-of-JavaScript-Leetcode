@@ -38,6 +38,7 @@ This repository contains my solutions to the LeetCode 30 Days JavaScript Challen
 - [26 Flatten Deeply Nested Array](#26-flatten-deeply-nested-array)
 - [27 Compact Object](#27-compact-object)
 - [28 Event Emitter](#28-event-emitter)
+- [29 Array Wrapper](#29-array-wrapper)
 
 ## 01 Create Hello World Function
 
@@ -1150,5 +1151,42 @@ class EventEmitter {
  * emitter.emit('onClick'); // [99]
  * sub.unsubscribe(); // undefined
  * emitter.emit('onClick'); // []
+ */
+```
+
+## 29 Array Wrapper
+
+### [Problem Statement ↗️](https://leetcode.com/problems/array-wrapper/?envType=study-plan-v2&envId=30-days-of-javascript)
+
+Create a class ArrayWrapper that accepts an array of integers in its constructor. This class should have two features:
+
+- When two instances of this class are added together with the + operator, the resulting value is the sum of all the elements in both arrays.
+
+- When the String() function is called on the instance, it will return a comma separated string surrounded by brackets. For example, [1,2,3].
+
+### Solution
+
+```js
+class ArrayWrapper {
+  nums = [];
+  constructor(nums: number[]) {
+    this.nums = nums;
+  }
+
+  valueOf(): number {
+    return this.nums.reduce((acc, curr) => acc + curr, 0);
+  }
+
+  toString(): string {
+    return `[${this.nums.join(",")}]`;
+  }
+}
+
+/**
+ * const obj1 = new ArrayWrapper([1,2]);
+ * const obj2 = new ArrayWrapper([3,4]);
+ * obj1 + obj2; // 10
+ * String(obj1); // "[1,2]"
+ * String(obj2); // "[3,4]"
  */
 ```
