@@ -235,9 +235,17 @@ function map(arr: number[], fn: (n: number, i: number) => number): number[] {
 
 ### Explanation
 
-This problem has asked for an array of number whose value will be from calling the **fn** function with all the elements of **arr** array one by one, so we have to pass arr array elements with their respective array index in fn function to get a value and will have to store in an array and have to return it as an output.
+- Using forEach to iterate over each element of the array.
+- For each element, it applies the mapping function fn with the element and index and stores the result in the returnedArray.
+- Finally, it returns the transformed array.
 
-So for it I had declared an empty array named returnedArray, after which you can use any loop like forEach as above or simple for loop to loop over each elements of the arr array then will have to pass the array element and index to the fn function to get a value and then push it in the array returnedArray. After the loop I had simply returned the returnedArray.
+### Time Complexity
+
+The time complexity is O(n), where n is the length of the input array. This is because the function iterates through each element once.
+
+### Space Complexity
+
+The space complexity is O(n) as it creates a new array to store the transformed values.
 
 ### Solution by using Map method
 
@@ -251,7 +259,15 @@ function map(arr: number[], fn: (n: number, i: number) => number): number[] {
 
 ### Explanation
 
-As the problem statement says that we should not use map method over it but if you want you can use map method on arr array and can just return it as map method will create a new array with the values that are being returned from the map and that will be returned by return keyword. Inside the map method we can simply return the value getting from fn function by passing each element and their respective index in the fn function.
+The map function uses the built-in map method to create a new array with the results of calling a provided function on every element in the array.
+
+### Time Complexity
+
+The time complexity of the map method is O(n), where n is the length of the input array. The fn function is applied to each element once.
+
+### Space Complexity
+
+The space complexity is O(n) as it creates a new array to store the transformed values.
 
 ## 06 Filter Elements from Array
 
@@ -283,6 +299,21 @@ function filter(arr: number[], fn: Fn): number[] {
 }
 ```
 
+### Explanation
+
+- Using forEach to iterate over each element of the array.
+- For each element, it applies the filtering function fn with the element and index.
+- If the result is truthy, it adds the element to the newArray.
+- Finally, it returns the filtered array.
+
+### Time Complexity
+
+The time complexity is O(n), where n is the length of the input array. This is because the function iterates through each element once.
+
+### Space Complexity
+
+The space complexity is O(k), where k is the number of elements that satisfy the filtering condition and are added to the newArray.
+
 ### Solution by using Filter method
 
 ```js
@@ -294,6 +325,18 @@ function filter(arr: number[], fn: Fn): number[] {
   });
 }
 ```
+
+### Explanation
+
+The filter function uses the built-in filter method to create a new array with the elements that satisfy the filtering condition.
+
+### Time Complexity
+
+The time complexity of the filter method is O(n), where n is the length of the input array. The fn function is applied to each element once.
+
+### Space Complexity
+
+The space complexity is O(k), where k is the number of elements that satisfy the filtering condition and are added to the new array.
 
 ## 07 Array Reduce Transformation
 
@@ -320,6 +363,21 @@ function reduce(nums: number[], fn: Fn, init: number): number {
 }
 ```
 
+### Explanation
+
+- The reduce function takes an array nums, a reducer function fn, and an initial value init.
+- It initializes output with the initial value.
+- It uses forEach to iterate over each element of the array and applies the reducer function fn.
+- The final value of output is returned.
+
+### Time Complexity
+
+The time complexity is O(n), where n is the length of the input array. This is because the function iterates through each element once.
+
+### Space Complexity
+
+The space complexity is O(1) as the function uses a constant amount of space.
+
 ### Solution by using Reduce method
 
 ```js
@@ -331,6 +389,20 @@ function reduce(nums: number[], fn: Fn, init: number): number {
   }, init);
 }
 ```
+
+### Explanation
+
+- The reduce function uses the built-in reduce method to perform the reduction.
+- The reduce method applies the provided reducer function fn to each element of the array, accumulating the result.
+- The initial value is specified as init.
+
+### Time Complexity
+
+The time complexity of the reduce method is O(n), where n is the length of the input array. The fn function is applied to each element once.
+
+### Space Complexity
+
+The space complexity is O(1) as the function uses a constant amount of space.
 
 ## 08 Function Composition
 
@@ -358,12 +430,22 @@ function compose(functions: F[]): F {
     return output;
   };
 }
-
-/**
- * const fn = compose([x => x + 1, x => 2 * x])
- * fn(4) // 9
- */
 ```
+
+### Explanation
+
+- The compose function takes an array of functions functions.
+- It returns a new function that represents the composition of the input functions.
+- The returned function takes an argument x and applies the functions in reverse order (from the last function to the first).
+- The result of the composition is returned.
+
+### Time Complexity
+
+The time complexity is O(n), where n is the number of functions in the array. The function iterates over the array of functions once.
+
+### Space Complexity
+
+The space complexity is O(1) as the function uses a constant amount of space.
 
 ## 09 Return Length of Arguments Passed
 
@@ -385,11 +467,20 @@ type JSONValue =
 function argumentsLength(...args: JSONValue[]): number {
   return args.length;
 }
-
-/**
- * argumentsLength(1, 2, 3); // 3
- */
 ```
+
+### Explanation
+
+- The argumentsLength function takes a variable number of arguments using the rest parameter ...args.
+- It returns the length of the array args, which corresponds to the number of arguments passed to the function.
+
+### Time Complexity
+
+The time complexity is O(1). The function directly returns the length of the array, and the length property of an array is a constant-time operation.
+
+### Space Complexity
+
+The space complexity is O(1), as it is returning the length directly.
 
 ## 10 Allow One Function Call
 
@@ -423,15 +514,25 @@ function once(fn: Function): OnceFn {
     }
   };
 }
-
-/**
- * let fn = (a,b,c) => (a + b + c)
- * let onceFn = once(fn)
- *
- * onceFn(1,2,3); // 6
- * onceFn(2,3,6); // returns undefined without calling fn
- */
 ```
+
+Explanation:
+The goal of the once function is to create a new function that ensures the original function (fn) is called at most once.
+
+- The once function takes a function (fn) as its parameter.
+- It initializes a flag variable to keep track of whether the function has been called.
+- It returns a new function that takes any number of arguments.
+- Inside the new function:
+  - If the flag is true, indicating that the function has already been called, it returns undefined.
+  - If the flag is false, it sets the flag to true and calls the original function (fn) with the provided arguments.
+
+### Time Complexity
+
+The time complexity of the returned function is O(1) for each call. Checking the flag and calling the original function are both constant-time operations.
+
+### Space Complexity
+
+The space complexity is O(1). The function uses a constant amount of space to store the flag variable, regardless of the size of the input.
 
 ## 11 Memoize
 
@@ -464,18 +565,27 @@ function memoize(fn: Fn): Fn {
     return output;
   };
 }
-
-/**
- * let callCount = 0;
- * const memoizedFn = memoize(function (a, b) {
- *	 callCount += 1;
- *   return a + b;
- * })
- * memoizedFn(2, 3) // 5
- * memoizedFn(2, 3) // 5
- * console.log(callCount) // 1
- */
 ```
+
+### Explanation
+
+The goal of the memoize function is to create a memoized version of the input function (fn), which caches the results of previous calls and returns the cached result if the same inputs are provided again.
+
+- The memoize function takes a function (fn) as its parameter.
+- It initializes an empty cache object to store previously computed results.
+- It returns a new function that takes any number of arguments.
+- Inside the new function:
+  - It generates a unique key based on the provided arguments.
+  - If the key is already in the cache, it returns the cached result.
+  - If the key is not in the cache, it calls the original function (fn) with the provided arguments, stores the result in the cache with the key, and returns the result.
+
+### Time Complexity
+
+The time complexity of the returned function depends on whether the inputs have been seen before. In the average case, where unique inputs are provided, the time complexity is O(1) because accessing the result from the cache is a constant-time operation.
+
+### Space Complexity
+
+The space complexity is O(k), where k is the number of unique input combinations. The cache object stores results for each unique set of inputs, increasing space usage as more unique inputs are encountered.
 
 ## 12 Add Two Promises
 
@@ -493,11 +603,6 @@ async function addTwoPromises(promise1: P, promise2: P): P {
   const num2 = await promise2;
   return num1 + num2;
 }
-
-/**
- * addTwoPromises(Promise.resolve(2), Promise.resolve(2))
- *   .then(console.log); // 4
- */
 ```
 
 ### Solution by using Promise.All
@@ -509,12 +614,31 @@ async function addTwoPromises(promise1: P, promise2: P): P {
   const [num1, num2] = await Promise.all([promise1, promise2]);
   return num1 + num2;
 }
-
-/**
- * addTwoPromises(Promise.resolve(2), Promise.resolve(2))
- *   .then(console.log); // 4
- */
 ```
+
+### Explanation
+
+The goal is to create a function, addTwoPromises, that takes two promises (promise1 and promise2) resolving to numbers and returns a new promise resolving to the sum of the two numbers.
+
+### Solution Without Using Promise.all
+
+- The function addTwoPromises uses the await keyword to wait for each promise to resolve.
+- It assigns the resolved values to num1 and num2.
+- It returns a promise resolving to the sum of num1 and num2.
+
+### Solution Using Promise.all
+
+- The function addTwoPromises uses Promise.all to wait for both promises to resolve concurrently.
+- It destructures the array returned by Promise.all into num1 and num2.
+- It returns a promise resolving to the sum of num1 and num2.
+
+### Time Complexity
+
+Both solutions have a time complexity of O(n), where n is the time it takes for each promise to resolve. In the case of the solution using Promise.all, the two promises can resolve concurrently, potentially providing a performance benefit.
+
+### Space Complexity
+
+The space complexity of both solutions is O(1) because they use a constant amount of space regardless of the input size. The function variables num1 and num2 only store the resolved values of the promises.
 
 ## 13 Sleep
 
@@ -528,12 +652,24 @@ Given a positive integer millis, write an asynchronous function that sleeps for 
 async function sleep(millis: number): Promise<void> {
   await new Promise((resolve) => setTimeout(resolve, millis));
 }
-
-/**
- * let t = Date.now()
- * sleep(100).then(() => console.log(Date.now() - t)) // 100
- */
 ```
+
+### Explanation
+
+The goal is to create an asynchronous function, sleep, that takes a positive integer millis representing the number of milliseconds to sleep and returns a promise that resolves after the specified time.
+
+- The sleep function uses the await keyword to pause the execution of the function until the specified time has passed.
+- It creates a promise that resolves after millis milliseconds using setTimeout.
+- The await expression pauses the function, allowing other asynchronous tasks to run during the sleep duration.
+- The function returns a promise that resolves with void since the primary goal is to introduce a delay.
+
+### Time Complexity
+
+The time complexity of the sleep function is O(1). The function introduces a fixed delay specified by the millis parameter, and the time complexity is constant regardless of the input size.
+
+### Space Complexity
+
+The space complexity of the sleep function is O(1). It uses a constant amount of space, and the asynchronous nature of the function ensures that it doesn't accumulate memory usage during sleep.
 
 ## 14 Timeout Cancellation
 
@@ -560,33 +696,24 @@ function cancellable(fn: Fn, args: JSONValue[], t: number): Function {
   const cancelFn = () => clearTimeout(timeOver);
   return cancelFn;
 }
-
-/**
- *  const result = []
- *
- *  const fn = (x) => x * 5
- *  const args = [2], t = 20, cancelT = 50
- *
- *  const start = performance.now()
- *
- *  const log = (...argsArr) => {
- *      const diff = Math.floor(performance.now() - start);
- *      result.push({"time": diff, "returned": fn(...argsArr)})
- *  }
- *
- *  const cancel = cancellable(log, args, t);
- *
- *  const maxT = Math.max(t, cancelT)
- *
- *  setTimeout(() => {
- *     cancel()
- *  }, cancelT)
- *
- *  setTimeout(() => {
- *     console.log(result) // [{"time":20,"returned":10}]
- *  }, maxT + 15)
- */
 ```
+
+### Explanation
+
+The goal is to create a cancellable function that takes a function fn, an array of arguments args, and a timeout t in milliseconds. The function should return another function cancelFn, which, if invoked before the timeout t elapses, prevents the original function fn from being called.
+
+- The cancellable function uses setTimeout to schedule the execution of the original function fn after the specified timeout t milliseconds.
+- It returns a cancelFn function that, when invoked, clears the timeout, preventing the execution of the original function.
+- The cancelFn is created using clearTimeout on the identifier obtained from setTimeout.
+- The original function is called with the provided arguments (...args) after the timeout if cancelFn is not invoked before the timeout elapses.
+
+### Time Complexity
+
+The time complexity of the cancellable function is O(1). The function involves scheduling a single timeout using setTimeout, and the time complexity is constant.
+
+### Space Complexity
+
+The space complexity of the cancellable function is O(1). It uses a constant amount of space, and the memory usage is not affected by the input size.
 
 ## 15 Interval Cancellation
 
@@ -614,38 +741,23 @@ function cancellable(fn: Fn, args: JSONValue[], t: number): Function {
   const cancelFn = () => clearInterval(timeOver);
   return cancelFn;
 }
-
-/**
- *  const result = []
- *
- *  const fn = (x) => x * 2
- *  const args = [4], t = 35, cancelT = 190
- *
- *  const start = performance.now()
- *
- *  const log = (...argsArr) => {
- *      const diff = Math.floor(performance.now() - start)
- *      result.push({"time": diff, "returned": fn(...argsArr)})
- *  }
- *
- *  const cancel = cancellable(log, args, t);
- *
- *  setTimeout(() => {
- *     cancel()
- *  }, cancelT)
- *
- *  setTimeout(() => {
- *    console.log(result)  // [
- *                         //      {"time":0,"returned":8},
- *                         //      {"time":35,"returned":8},
- *                         //      {"time":70,"returned":8},
- *                         //      {"time":105,"returned":8},
- *                         //      {"time":140,"returned":8},
- *                         //      {"time":175,"returned":8}
- *                         //  ]
- *  }, cancelT + t + 15)
- */
 ```
+
+### Explanation
+
+The goal is to create a cancellable function that takes a function fn, an array of arguments args, and an interval time t in milliseconds. The function should immediately call fn with the provided arguments and then repeatedly call it every t milliseconds until the cancelFn is invoked at cancelT milliseconds.
+
+- The cancellable function first calls the original function fn immediately with the provided arguments (fn(...args)).
+- It then sets up an interval using setInterval to repeatedly call the original function with the provided arguments every t milliseconds.
+- The cancelFn function is returned, which, when invoked, clears the interval, stopping further executions of the original function.
+
+### Time Complexity
+
+The time complexity of the cancellable function is O(1). It involves an initial immediate call to the original function and setting up an interval, both of which have constant time complexity.
+
+### Space Complexity
+
+The space complexity of the cancellable function is O(1). It uses a constant amount of space, and the memory usage is not affected by the input size.
 
 ## 16 Promise Time Limit
 
@@ -672,12 +784,24 @@ function timeLimit(fn: Fn, t: number): Fn {
     return Promise.race([onSuccess, timeoutPromise]);
   };
 }
-
-/**
- * const limited = timeLimit((t) => new Promise(res => setTimeout(res, t)), 100);
- * limited(150).catch(console.log) // "Time Limit Exceeded" at t=100ms
- */
 ```
+
+### Explanation
+
+The goal is to create a timeLimit function that takes an asynchronous function fn and a time limit t in milliseconds. The timeLimit function returns a new function that imposes a time limit on the execution of the original function.
+
+- The timeLimit function returns a new asynchronous function that takes any number of arguments (...args).
+- The original function fn is called with the provided arguments (fn(...args)), and the result is stored in the onSuccess promise.
+- A new promise, timeoutPromise, is created using setTimeout. If the execution of the original function exceeds the time limit t, this promise rejects with the string "Time Limit Exceeded."
+- Promise.race is used to race between the onSuccess promise and the timeoutPromise. The first promise to settle (either resolve or reject) will determine the fate of the time-limited function.
+
+### Time Complexity
+
+The time complexity of the timeLimit function is O(1). It involves calling the original function and setting up a timeout, both of which have constant time complexity.
+
+### Space Complexity
+
+The space complexity of the timeLimit function is O(1). It uses a constant amount of space, and the memory usage is not affected by the input size.
 
 ## 17 Cache With Time Limit
 
