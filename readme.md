@@ -55,15 +55,20 @@ function createHelloWorld() {
     return "Hello World";
   };
 }
-/*
- * const f = createHelloWorld();
- * f(); // "Hello World"
- */
 ```
 
 ### Explanation
 
-Inside the return statement of the createHelloWorld function we just have to return the string "Hello World" as it is a simple hello world program.
+- The createHelloWorld function generates a new function.
+- The generated function consistently returns the string "Hello World" when invoked.
+
+### Time Complexity
+
+The time complexity of calling the generated function is O(1) since it always returns the same result, and the execution time is constant.
+
+### Space Complexity
+
+The space complexity is O(1) because the inner function doesn't use any additional memory that scales with the input.
 
 ## 02 Counter
 
@@ -81,33 +86,22 @@ function createCounter(n: number): () => number {
     return number;
   };
 }
-
-/*
- * const counter = createCounter(10)
- * counter() // 10
- * counter() // 11
- * counter() // 12
- */
 ```
 
 ### Explanation
 
-The problem says that it will return n in first go and then for next call to the function it will return n+1 everytime. So for this problem we need to use **closure**.
+- The createCounter function takes an initial value n and returns a function.
+- The returned function, when called, increments and returns the counter value.
+- This solution utilizes closure, where the inner function has access to the outer function's variables.
+- The outer function (createCounter) initializes number, and the inner function (the one returned) maintains and increments it.
 
-```js
-let number = n - 1;
-```
+### Time Complexity
 
-By declaring a new variable inside the createCounter and storing the **n - 1** in it as the statement want **n** in the first call so when we will increase the value of number by 1 it will be equal to the n itself for the first go and then will increase by 1 in subsequent calls.
+The time complexity of this solution is constant O(1) because the function performs a fixed number of operations regardless of the input.
 
-```js
-return function () {
-  number += 1;
-  return number;
-};
-```
+### Space Complexity
 
-After this we can simply increase the value of number by 1 inside the inner function and return it. The inner function will have the access of its outer scope as it is forming closure with createCounter function.
+The space complexity is O(1) as there is a constant amount of space used, mainly for the number variable.
 
 ## 03 To Be Or Not To Be
 
@@ -145,20 +139,21 @@ function expect(val: any): ToBeOrNotToBe {
     },
   };
 }
-
-/**
- * expect(5).toBe(5); // true
- * expect(5).notToBe(5); // throws "Equal"
- */
 ```
 
 ### Explanation
 
-This problem statement states that for toBe, if the argument of toBe and expect function are equal then the toBe should return true else should throw new error "Not Equal".
+- The expect function takes a value val and returns an object with two functions: toBe and notToBe.
+- toBe compares the given value with the stored value (val). If they are strictly equal, it returns true; otherwise, it throws an error "Not Equal".
+- notToBe compares the given value with the stored value (val). If they are not strictly equal, it returns true; otherwise, it throws an error "Equal".
 
-Same thing is required for notToBe as it will return true if its argument and expect function argument is not same else should throw new error "Equal".
+### Time Complexity
 
-So I am simply returning an object from expect having two keys one as toBe and second one as notToBe which is using if and else to check that the argument of theirs is matching with the expect function or not and then returning the respective answer.
+The time complexity of this solution is constant O(1) because both toBe and notToBe perform a fixed number of operations regardless of the input.
+
+### Space Complexity
+
+The space complexity is O(1) as there is a constant amount of space used, mainly for the number variable. This solution utilizes a minimal amount of memory regardless of the input size.
 
 ## 04 Counter II
 
@@ -199,20 +194,23 @@ function createCounter(init: number): ReturnObj {
     },
   };
 }
-
-/**
- * const counter = createCounter(5)
- * counter.increment(); // 6
- * counter.reset(); // 5
- * counter.decrement(); // 4
- */
 ```
 
 ### Explanation
 
-The problem expect to return an object which should consists of three function i.e increment(), decrement() and reset(). As the name suggest increment will increase the value by 1 and return similar goes for the decrement but just will decrease by 1 and reset will reset the value to the initial value which is passed as an argument in the createCounter function. This problem will be solved using the closure in JavaScript.
+- The createCounter function takes an initial value init and returns an object with three functions: increment, decrement, and reset.
+- The value variable is used to store the current value of the counter.
+- increment: Increases the current value by 1 and returns the updated value.
+- decrement: Reduces the current value by 1 and returns the updated value.
+- reset: Sets the current value to the initial value (init) and returns it.
 
-So inside the createCounter function first we will declare a variable named value which will hold the initial value init in it. After that we will return an object and will increase and decrease the value by 1 for increment and decrement and will return the value variable from it as these will form a closure with the value variable. Also for reset we will assign the init to value variable and will return the init or value both is fine.
+### Time Complexity
+
+The time complexity of all three functions (increment, decrement, and reset) is constant O(1). Each function performs a fixed number of operations regardless of the input size.
+
+### Space Complexity
+
+The space complexity is O(1) as there is a constant amount of space used. The value variable is the only significant memory usage, and it does not depend on the input size.
 
 ## 05 Apply Transform Over Each Element in Array
 
@@ -254,10 +252,6 @@ function map(arr: number[], fn: (n: number, i: number) => number): number[] {
 ### Explanation
 
 As the problem statement says that we should not use map method over it but if you want you can use map method on arr array and can just return it as map method will create a new array with the values that are being returned from the map and that will be returned by return keyword. Inside the map method we can simply return the value getting from fn function by passing each element and their respective index in the fn function.
-
-### Time Complexity
-
-O(n) as we are looping on the array for one time.
 
 ## 06 Filter Elements from Array
 
