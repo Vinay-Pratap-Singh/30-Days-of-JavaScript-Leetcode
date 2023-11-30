@@ -851,12 +851,24 @@ class TimeLimitedCache {
     return Object.keys(this.obj).length;
   }
 }
-
-// const timeLimitedCache = new TimeLimitedCache();
-// timeLimitedCache.set(1, 42, 1000); // false
-// timeLimitedCache.get(1); // 42
-// timeLimitedCache.count(); // 1
 ```
+
+### Explanation
+
+The goal is to implement a TimeLimitedCache class with methods to get and set key-value pairs, where each key has an associated time until expiration. The class should have three public methods: set, get, and count.
+
+- The class has a property obj to store key-value pairs along with their expiration timers.
+- The set method takes a key, value, and duration. It sets a timeout for the key's expiration and stores the value along with the expiration timer in the obj. If the key already exists, the existing timeout is cleared, and a new timeout is set. The method returns true if the key already exists and false otherwise.
+- The get method takes a key and returns the associated value if the key is unexpired. Otherwise, it returns -1.
+- The count method returns the count of unexpired keys.
+
+### Time Complexity
+
+The time complexity of the set method is O(1) for creating and clearing timeouts, and the time complexity of the get and count methods is O(1) as they involve simple object property lookups.
+
+### Space Complexity
+
+The space complexity is O(n), where n is the number of unexpired keys in the cache. The obj property stores key-value pairs along with their expiration timers.
 
 ## 18 Debounce
 
@@ -878,14 +890,24 @@ function debounce(fn: F, t: number): F {
     timerID = setTimeout(fn, t, ...args);
   };
 }
-
-/**
- * const log = debounce(console.log, 100);
- * log('Hello'); // cancelled
- * log('Hello'); // cancelled
- * log('Hello'); // Logged at t=100ms
- */
 ```
+
+### Explanation
+
+The goal is to implement a debounced function, where the execution of the original function is delayed by a specified time t milliseconds, and if the debounced function is called again within that time window, the previous execution is cancelled.
+
+- The debounce function takes an original function fn and a time t in milliseconds.
+- It uses a closure to maintain a timerID variable, initially set to undefined.
+- The returned function is the debounced version of the original function. When this debounced function is called, it first clears the existing timeout using clearTimeout with the current timerID.
+- Then, it sets a new timeout using setTimeout to call the original function (fn) after the specified delay (t milliseconds), passing the provided arguments (...args).
+
+### Time Complexity
+
+The time complexity is O(1) for clearing and setting timeouts.
+
+### Space Complexity
+
+The space complexity is O(1), as there is a constant amount of space used, mainly for the timerID variable.
 
 ## 19 Execute Asynchronous Functions in Parallel
 
@@ -922,12 +944,26 @@ function promiseAll<T>(functions: Fn<T>[]): Promise<T[]> {
     }
   });
 }
-
-/**
- * const promise = promiseAll([() => new Promise(res => res(42))])
- * promise.then(console.log); // [42]
- */
 ```
+
+### Explanation
+
+The goal is to implement a function promiseAll that takes an array of asynchronous functions and returns a new promise. This promise should resolve when all the promises returned from the functions are resolved successfully in parallel. If any of the promises are rejected, the main promise should reject with the reason of the first rejection.
+
+- The promiseAll function takes an array of asynchronous functions (functions).
+- It returns a new promise that resolves with an array of all the resolved values of promises in the same order as they were in the functions array.
+- It uses a loop to iterate through the array of functions and executes each function.
+- The output array is used to store the resolved values.
+- The count variable is used to keep track of the number of functions that have completed. When all functions have completed successfully (count becomes 0), the main promise is resolved with the output array.
+- If any of the promises are rejected, the main promise is rejected with the reason of the first rejection.
+
+### Time Complexity
+
+The time complexity is O(n), where n is the number of asynchronous functions in the input array. This is because all the functions are executed in parallel, and the main promise resolves once all functions are completed.
+
+### Space Complexity
+
+The space complexity is O(n), where n is the number of asynchronous functions in the input array. This is due to the output array used to store the resolved values.
 
 ## 20 Is Object Empty
 
@@ -956,6 +992,23 @@ function isEmpty(obj: Obj): boolean {
   return Object.keys(obj).length === 0 ? true : false;
 }
 ```
+
+### Explanation
+
+The goal is to implement a function isEmpty that determines whether an object or array is empty.
+
+- The isEmpty function takes an object (obj) or an array as an input.
+- For an object, it checks if the number of keys in the object is zero. If yes, then the object is empty.
+- For an array, it checks if the length of the array is zero. If yes, then the array is empty.
+- The function returns true if the object or array is empty and false otherwise.
+
+### Time Complexity
+
+The time complexity is O(1) because both object keys and array length can be obtained in constant time.
+
+### Space Complexity
+
+The space complexity is O(1) because the function uses a constant amount of space regardless of the size of the input object or array.
 
 ## 21 Chunk Array
 
@@ -992,6 +1045,27 @@ function chunk(arr: Obj[], size: number): Obj[][] {
 }
 ```
 
+### Explanation
+
+The goal is to implement a function chunk that takes an array (arr) and a chunk size (size) and returns a chunked array, where each subarray has a length of size. The last subarray may have a length less than size if the original array length is not evenly divisible by size.
+
+- The function initializes an empty array output to store the chunked subarrays.
+- It calculates the total number of required iterations (totalRequiredIterations) to process the entire array in chunks of the specified size.
+- The function uses a while loop to iterate until the required number of chunks is obtained.
+- Inside the loop, it checks if the length of the remaining array (arr.length) is greater than the specified chunk size (size).
+- If yes, it extracts a chunk of elements from the beginning of the array using splice and pushes it into the output array.
+- If the remaining array length is less than or equal to the chunk size, it pushes the entire remaining array into the output.
+- The loop increments the chunk counter.
+- Finally, the function returns the chunked array.
+
+### Time Complexity
+
+The time complexity is O(n), where n is the length of the input array (arr). The function iterates through the array once.
+
+### Space Complexity
+
+The space complexity is O(n), where n is the length of the input array (arr). The function uses additional space to store the chunked subarrays in the output array.
+
 ## 22 Array Prototype Last
 
 ### [Problem Statement ↗️](https://leetcode.com/problems/array-prototype-last/?envType=study-plan-v2&envId=30-days-of-javascript)
@@ -1011,13 +1085,25 @@ Array.prototype.last = function() {
      return this.length ? this[this.length - 1] : -1;
 };
 
-/**
- * const arr = [1, 2, 3];
- * arr.last(); // 3
- */
-
 export {};
 ```
+
+### Explanation
+
+The goal is to enhance all arrays in JavaScript by adding a last() method that can be called on any array, returning the last element of the array. If the array is empty, the method should return -1.
+
+- The solution uses TypeScript declaration merging to extend the Array interface and add a last() method.
+- The Array.prototype.last function is defined to return the last element of the array if the array is not empty (this.length > 0). Otherwise, it returns -1.
+- The export {} statement at the end is used to prevent TypeScript from considering the file as a module, allowing the global augmentation.
+- The example demonstrates the usage of the enhanced array with the last() method.
+
+### Time Complexity
+
+The time complexity of the last() method is O(1) because it directly accesses the last element of the array using its length.
+
+### Space Complexity
+
+The space complexity is O(1) because the function does not use additional space proportional to the size of the input.
 
 ## 23 Group By
 
@@ -1042,22 +1128,38 @@ declare global {
 
 Array.prototype.groupBy = function(fn) {
     const result: Record<string, any[]> = {}
-
     for (let i = 0; i < this.length; i++) {
         const key: string = fn(this[i])
-
         if (result[key]) {
             result[key].push(this[i])
         } else {
             result[key] = [this[i]]
         }
     }
-
     return result
 }
 
 export {}
 ```
+
+### Explanation
+
+The goal is to enhance all arrays in JavaScript by adding a groupBy method that can be called on any array. This method takes a callback function fn as an argument, which determines the grouping key for each element in the array. The result is an object where each key corresponds to a unique output of fn(arr[i]), and the values are arrays containing all items in the original array with that key.
+
+- The solution uses TypeScript declaration merging to extend the Array interface and add a groupBy method.
+- The Array.prototype.groupBy function iterates over each element in the array and calculates the key by applying the provided callback function fn(item).
+- It maintains a result object where keys are the calculated grouping keys, and values are arrays containing items associated with each key.
+- If a key already exists in the result object, the item is added to the existing array. Otherwise, a new array is created for that key.
+- The resulting object is returned.
+- The export {} statement at the end is used to prevent TypeScript from considering the file as a module, allowing the global augmentation.
+
+### Time Complexity
+
+The time complexity of the groupBy method is O(n), where n is the length of the array. This is because it iterates through each element in the array once.
+
+### Space Complexity
+
+The space complexity is O(k), where k is the number of unique keys generated by the callback function fn. This is because the resulting object stores arrays for each unique key.
 
 ## 24 Sort By
 
@@ -1090,6 +1192,24 @@ function sortBy(arr: JSONValue[], fn: Fn): JSONValue[] {
 }
 ```
 
+### Explanation
+
+The goal is to sort an array arr based on the output of a function fn for each element. The sorting should be done in ascending order according to the numerical output of fn.
+
+- The solution defines a type Fn for the callback function that takes a JSONValue (the array element) and returns a number.
+- The sortBy function takes an array arr and a callback function fn as parameters.
+- It creates a new array newArr by mapping each element in the original array to an object with properties v (value returned by fn) and o (original value).
+- The newArr is then sorted based on the v property in ascending order.
+- Finally, the sorted array is obtained by mapping the sorted objects in newArr back to their original values using the o property.
+
+### Time Complexity
+
+The time complexity of this solution is dominated by the sorting step, which is O(n log n), where n is the length of the array.
+
+### Space Complexity
+
+The space complexity is O(n), where n is the length of the array. This is because a new array (newArr) is created to store objects with v and o properties for each element in the original array.
+
 ## 25 Join Two Arrays by ID
 
 ### [Problem Statement ↗️](https://leetcode.com/problems/join-two-arrays-by-id/description/?envType=study-plan-v2&envId=30-days-of-javascript)
@@ -1115,6 +1235,25 @@ const join = (arr1: IdObj[], arr2: IdObj[]): IdObj[] => {
   return [...map.values()].sort((a, b) => a.id - b.id);
 };
 ```
+
+### Explanation
+
+The goal is to merge two arrays arr1 and arr2 based on their id field. If two objects share an id, their properties should be merged into a single object, giving priority to values from arr2. The resulting array should be sorted in ascending order based on the id field.
+
+- The solution defines a type IdObj representing objects with an id field.
+- The join function takes two arrays arr1 and arr2 of IdObj type.
+- It uses a Map to efficiently merge the objects based on their id field.
+- The function iterates through each element in arr1 and arr2, updating the map with merged objects.
+- The merged objects are created using Object.assign() to ensure that properties are properly merged, giving priority to values from arr2.
+- The resulting array is obtained by spreading the values from the map and sorting them in ascending order based on the id field.
+
+### Time Complexity
+
+The time complexity is O(n log n), where n is the total number of unique id values. This is because the final array is sorted.
+
+### Space Complexity
+
+The space complexity is O(n), where n is the total number of unique id values. The space is used to store merged objects in the map.
 
 ## 26 Flatten Deeply Nested Array
 
@@ -1152,6 +1291,26 @@ var flat = function (
   return output;
 };
 ```
+
+### Explanation
+
+The goal is to flatten a multi-dimensional array arr up to a certain depth n. The flattening operation is applied only if the current depth of nesting is less than n.
+
+- The flat function takes a multi-dimensional array arr and a depth n as parameters.
+- The base case checks if the current depth n is 0. If true, it returns the original array as it is.
+- The function initializes an empty array output to store the flattened result.
+- It iterates over each element in the array using forEach.
+- If the element is an array (nested array), it recursively calls the flat function with the nested array and decrements the depth n.
+- If the element is not an array, it is pushed directly into the output array.
+- The final result is an array where sub-arrays are flattened up to the specified depth.
+
+### Time Complexity
+
+The time complexity is O(N), where N is the total number of elements in the input array. This is because each element is visited once.
+
+### Space Complexity
+
+The space complexity is O(N), where N is the total number of elements in the input array. This accounts for the space used by the output array. The recursive call stack also contributes to the space complexity, but it is limited by the depth of the recursion (up to n).
 
 ## 27 Compact Object
 
@@ -1199,6 +1358,27 @@ function compactObject(obj: Obj): Obj {
 }
 ```
 
+### Explanation
+
+The goal is to create a compact object by removing keys with falsy values from the original object. This operation applies to the object and any nested objects, including arrays treated as objects.
+
+- The compactObject function takes an object obj as a parameter.
+- The base case checks if obj is falsy using !Boolean(obj). - If true, it returns undefined. This is done to remove keys with falsy values.
+- If obj is not falsy and is not of type "object," it means it is a leaf node (non-object). In this case, the function returns the original value.
+- If obj is an array, it maps over each element, applying the compactObject function recursively. It then filters out any undefined values from the result.
+- If obj is an object, the function initializes an empty object output.
+- It iterates over each key-value pair in the object. For each value, it applies the compactObject function recursively.
+- If the result is not undefined, it adds the key-value pair to the output object.
+- The final result is a compact object with keys containing falsy values removed.
+
+### Time Complexity
+
+The time complexity is O(N), where N is the total number of elements in the input object. This is because each element is visited once.
+
+### Space Complexity
+
+The space complexity is O(D), where D is the maximum depth of nesting in the input object. This is due to the recursive call stack. Additionally, the output object contributes to space complexity.
+
 ## 28 Event Emitter
 
 ### [Problem Statement ↗️](https://leetcode.com/problems/compact-object/?envType=study-plan-v2&envId=30-days-of-javascript)
@@ -1222,16 +1402,13 @@ type Subscription = {
 };
 
 class EventEmitter {
-
   private eventMap = new Map<string, Array<Callback>>();
-
   subscribe(eventName: string, callback: Callback): Subscription {
     if (this.eventMap.has(eventName)) {
       this.eventMap.get(eventName).push(callback);
     } else {
       this.eventMap.set(eventName, Array.of(callback));
     }
-
     return {
       unsubscribe: () => {
         const index = this.eventMap.get(eventName).indexOf(callback, 0);
@@ -1246,32 +1423,45 @@ class EventEmitter {
   emit(eventName: string, args: any[] = []): any[] | undefined {
     let result = [];
     const callBacks: Array<Callback> = this.eventMap.get(eventName) as Array<Callback>;
-
     if (!callBacks) {
       return [];
     }
-
     for (let i = 0; i < callBacks.length; i++) {
       result.push(callBacks[i](...args));
     }
-
     return result;
-
   }
 }
-
-/**
- * const emitter = new EventEmitter();
- *
- * // Subscribe to the onClick event with onClickCallback
- * function onClickCallback() { return 99 }
- * const sub = emitter.subscribe('onClick', onClickCallback);
- *
- * emitter.emit('onClick'); // [99]
- * sub.unsubscribe(); // undefined
- * emitter.emit('onClick'); // []
- */
 ```
+
+### Explanation
+
+The EventEmitter class is designed to manage event subscriptions and emission. It has two main methods: subscribe for subscribing to events and emit for triggering events.
+
+#### Event Subscription (subscribe method)
+
+- The subscribe method takes two parameters: eventName (string) and callback (function).
+- If the eventMap (a Map) already has the eventName, it appends the callback to the existing array of callbacks.
+- If the eventName is not present in the eventMap, it creates a new entry with the eventName and an array containing the callback.
+- The method returns an object with an unsubscribe method.
+- The unsubscribe method finds the index of the callback in the array and removes it. It returns undefined after successful removal.
+
+#### Event Emission (emit method)
+
+- The emit method takes two parameters: eventName (string) and args (an array of arguments, default is an empty array).
+- It retrieves the array of callbacks associated with the eventName from the eventMap.
+- If there are no callbacks, it returns an empty array.
+- It iterates over the callbacks, calling each with the provided args.
+- It returns an array containing the results of each callback call.
+
+### Time Complexity
+
+The time complexity of subscribing to an event (subscribe method) is O(1) because it involves checking if the eventName exists in the eventMap and adding or creating an array accordingly.
+The time complexity of emitting an event (emit method) is O(N), where N is the number of callbacks subscribed to the event. This is because it iterates over the array of callbacks.
+
+### Space Complexity
+
+The space complexity is O(M + N), where M is the number of unique event names, and N is the total number of callbacks. This accounts for the storage of event names and the associated arrays of callbacks in the eventMap.
 
 ## 29 Array Wrapper
 
@@ -1300,15 +1490,28 @@ class ArrayWrapper {
     return `[${this.nums.join(",")}]`;
   }
 }
-
-/**
- * const obj1 = new ArrayWrapper([1,2]);
- * const obj2 = new ArrayWrapper([3,4]);
- * obj1 + obj2; // 10
- * String(obj1); // "[1,2]"
- * String(obj2); // "[3,4]"
- */
 ```
+
+### Explanation
+
+The ArrayWrapper class is designed to wrap an array of integers and provide two features: addition of two instances using the + operator and a string representation using the String() function.
+
+#### valueOf Method
+
+The valueOf method is called when two instances are added together using the + operator. It returns the sum of all the elements in the array.
+
+#### toString Method
+
+The toString method is called when the String() function is applied to an instance. It returns a string representation of the array, surrounded by brackets and with elements separated by commas.
+
+### Time Complexity
+
+- The valueOf method has a time complexity of O(N), where N is the number of elements in the array. This is because it iterates through all elements to calculate the sum.
+- The toString method has a time complexity of O(N), where N is the number of elements in the array. This is because it uses the join method, which involves iterating through all elements.
+
+### Space Complexity
+
+The space complexity is O(N), where N is the number of elements in the array. This is due to the storage of the array in the nums property.
 
 ## 30 Calculator with Method Chaining
 
@@ -1372,3 +1575,47 @@ class Calculator {
   }
 }
 ```
+
+### Explanation
+
+The Calculator class is designed to perform basic mathematical operations and provide method chaining for consecutive operations. Let's go through each method and the overall structure:
+
+- Constructor
+
+  The constructor initializes the output property with the provided initial value.
+
+- Add (add method)
+
+  This method adds the given value to the current result and returns the updated Calculator instance.
+
+- Subtract (subtract method)
+
+  This method subtracts the given value from the current result and returns the updated Calculator instance.
+
+- Multiply (multiply method)
+
+  This method multiplies the current result by the given value and returns the updated Calculator instance.
+
+- Divide (divide method)
+
+  This method divides the current result by the given value and returns the updated Calculator instance. It throws an error if the provided value is 0 to prevent division by zero.
+
+- Power (power method)
+
+  This method raises the current result to the power of the given value and returns the updated Calculator instance.
+
+- Get Result (getResult method)
+
+  This method returns the current result.
+
+- Each method returns the Calculator instance (this), allowing for method chaining. This enables consecutive operations in a readable and concise manner.
+
+### Time Complexity
+
+The time complexity of each method is O(1) since the operations performed are basic arithmetic operations.
+
+### Space Complexity
+
+The space complexity is O(1) as the class stores a single value (output). The methods modify this value in place.
+
+> If you think any answer or explanation is wrong, please let me know, will update it 😊.
